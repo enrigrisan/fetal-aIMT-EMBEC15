@@ -1,8 +1,15 @@
-%addpath('./Functions')
-%addpath('./Functions/Basic')
 addpath('./Basic')
 
-load('FetalUS_Video_Example')
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% LOAD EXAMPLE DATA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%load('data/FetalUS_Video_Example.mat')
+load('data/FetalUS_Video_Info.mat')
+for ct=1:182,
+    seq(:,:,ct)=imread(sprintf('data/video_frames/frame_%.4i.jpg',ct));
+end
+frames=[1,lsize(seq,3)];
 
 px_size = info.PixelSpacing(1);
 f_rate = info.CineRate + 1;
@@ -16,8 +23,8 @@ a = repmat(struct('auto',[NaN NaN]),[n_frames 1]);
 a_meas = NaN(2,n_frames); %segm_frames; diam;
 A = struct('IntUp',a,'IntDn',a,'Meas',a_meas);
 
-% for f = frames(1):frames(2)
-for f = 50:50
+for f = frames(1):frames(2)
+%for f = 50:50
 
     I = double(seq(:,:,f))/double(norm_I);
 
